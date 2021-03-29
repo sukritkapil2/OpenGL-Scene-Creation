@@ -225,6 +225,119 @@ void Ground::drawFootPathFountainBase() {
     glTranslatef(0, 0, 0);
     glColor3ub(126,103,61);
     gluCylinder(quad, 4, 4, 2.5, 50, 20);
-
     draw_circle(0.0f, 0.0f, 2.5f, 4);
+    glColor3ub(102,156,178);
+    draw_circle(0.0f, 0.0f, 0.1f, 3.5);
+
+    glTranslatef(0, 0, 0);
+    glColor3ub(126,103,61);
+    gluCylinder(quad, 2, 2, 1.5, 50, 20);
+    draw_circle(0.0f, 0.0f, 1.5f, 2);
+    glColor3ub(102,156,178);
+    draw_circle(0.0f, 0.0f, 0.1f, 1.5);
+
+    glColor3ub(126,103,61);
+    glTranslatef(0, 0, 0);
+    gluCylinder(quad, 1, 1, 2.0f, 50, 20);
+    draw_circle(0.0f, 0.0f, 2.0f, 1);
+}
+
+void drawSpikeBushBranch() {
+    glPushMatrix();
+    glRotatef(20, 0, 1, 0);
+
+    glColor3ub(0,100,0);
+    glutSolidCone(0.1, 0.5, 20, 20);
+    glTranslatef(0, 0, 0.39);
+    glRotatef(15, 0, 1, 0);
+
+    glColor3ub(107,142,35);
+    glutSolidCone(0.1, 0.5, 20, 20);
+    glTranslatef(0, 0, 0.39);
+    glRotatef(10, 0, 1, 0);
+
+    glColor3ub(107,142,35);
+    glutSolidCone(0.1, 0.5, 20, 20);
+    glTranslatef(0, 0, 0.39);
+    glRotatef(8, 0, 1, 0);
+
+    glColor3ub(107,142,35);
+    glutSolidCone(0.1, 0.5, 20, 20);
+    glTranslatef(0, 0, 0.39);
+    glRotatef(1, 0, 1, 0);
+
+    glColor3ub(34,139,34);
+    glutSolidCone(0.1, 0.5, 20, 20);
+    glTranslatef(0, 0, 0.39);
+
+    glColor3ub(64,109,34);
+    glutSolidCone(0.1, 0.5, 20, 20);
+    glPopMatrix();
+}
+
+void drawSpikeBush(float x, float y) {
+
+    glPushMatrix();
+
+    glTranslatef(x, y, -4.05f);
+    drawSpikeBushBranch();
+
+    for(int i = 0;i <= 18; i++) {
+        glRotatef(20, 0, 0, 1);
+        drawSpikeBushBranch();
+    }
+
+    glPopMatrix();
+}
+
+void Ground::drawBushes() {
+
+    glPushMatrix();
+
+    float x = 10;
+
+    while(x <= this->width/2 - 10) {
+        drawSpikeBush(x, 0);
+        x += 10;
+    }
+
+    x = -10;
+
+    while(x >= -this->width/2 + 10) {
+        drawSpikeBush(x, 0);
+        x -= 10;
+    }
+
+    float y = 10;
+
+    while(y <= this->length/2 - 10) {
+        drawSpikeBush(0, y);
+        y += 10;
+    }
+
+    y = -10;
+
+    while(y >= -this->length/2 + 10) {
+        drawSpikeBush(0, y);
+        y -= 10;
+    }
+
+    glPopMatrix();
+}
+
+CBlock::CBlock(float x, float y) {
+    this->x = x;
+    this->y = y;
+}
+
+void CBlock::drawStage() {
+    float x = this->x;
+    float y = this->y;
+    
+    glPushMatrix();
+
+    glTranslatef(x-20, y, 0.1);
+    drawQuad(x-10, y+20, 0, x-30, y+20, 0, x-30, y-20, 0, x+10, y-20, 0);
+
+    glPopMatrix();
 }

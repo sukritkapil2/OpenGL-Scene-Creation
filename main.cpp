@@ -52,12 +52,18 @@ void Draw() {
     glRotatef(angleY, 0.0f, 1.0f, 0.0f);
     glRotatef(angleZ, 0.0f, 0.0f, 1.0f);
  
+    glPushMatrix();
     Ground *ground = new Ground(100, 100);
     (*ground).drawGround();
     (*ground).drawFootPathBorders();
     (*ground).drawFootPathBase();
     (*ground).drawFootPathBushes();
     (*ground).drawFootPathFountainBase();
+    (*ground).drawBushes();
+    glPopMatrix();
+
+    CBlock *cblock = new CBlock(60, 60);
+    (*cblock).drawStage();
 
     glutSwapBuffers();
 }
