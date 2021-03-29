@@ -19,9 +19,9 @@ float angleY = 0.0f;
 float angleZ = 0.0f;
 
 //Translation Variables
-float translateX = 0.0f;
+float translateX = 1.5f;
 float translateY = 0.0f;
-float translateZ = 0.0f;
+float translateZ = -50.0f;
 
 /**
  * Sets properties of the GLUT library to make it ready for 3D rendering
@@ -42,12 +42,20 @@ void myInit() {
 void Draw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glClearColor(1, 0.79, 0.79, 0);
+    glClearColor(0, 0, 0, 1);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
     glTranslatef(translateX, translateY, translateZ);
+    glRotatef(angleX, 1.0f, 0.0f, 0.0f);
+    glRotatef(angleY, 0.0f, 1.0f, 0.0f);
+    glRotatef(angleZ, 0.0f, 0.0f, 1.0f);
+ 
+    glColor3f(1, 0, 0);
+    glutSolidCone(10, 20, 100, 12);
+
+    glutSwapBuffers();
 }
 
 /**
@@ -211,4 +219,6 @@ int main(int argc, char **argv) {
     glutReshapeFunc(HandleResize);
 
     glutMainLoop();
+
+    return 0;
 }
