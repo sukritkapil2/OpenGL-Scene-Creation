@@ -21,7 +21,7 @@ float angleZ = 0.0f;
 //Translation Variables
 float translateX = 1.5f;
 float translateY = 0.0f;
-float translateZ = -50.0f;
+float translateZ = -100.0f;
 
 /**
  * Sets properties of the GLUT library to make it ready for 3D rendering
@@ -52,8 +52,12 @@ void Draw() {
     glRotatef(angleY, 0.0f, 1.0f, 0.0f);
     glRotatef(angleZ, 0.0f, 0.0f, 1.0f);
  
-    glColor3f(1, 0, 0);
-    glutSolidCone(10, 20, 100, 12);
+    Ground *ground = new Ground(100, 100);
+    (*ground).drawGround();
+    (*ground).drawFootPathBorders();
+    (*ground).drawFootPathBase();
+    (*ground).drawFootPathBushes();
+    (*ground).drawFootPathFountainBase();
 
     glutSwapBuffers();
 }
@@ -202,7 +206,7 @@ int main(int argc, char **argv) {
     //Initialize GLUT
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize(500, 500);
+    glutInitWindowSize(1000, 1000);
 
     //Window Properties
     glutCreateWindow("Scene in OpenGL");
