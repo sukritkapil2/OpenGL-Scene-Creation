@@ -11,6 +11,18 @@
 
 using namespace std;
 
+double zoom = 0.5; //!< Stores the current zoom of the window
+
+//Rotation Variables
+float angleX = 0.0f;
+float angleY = 0.0f;
+float angleZ = 0.0f;
+
+//Translation Variables
+float translateX = 0.0f;
+float translateY = 0.0f;
+float translateZ = 0.0f;
+
 /**
  * Sets properties of the GLUT library to make it ready for 3D rendering
 */
@@ -28,7 +40,14 @@ void myInit() {
  * Draws the scene
 */
 void Draw() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    glClearColor(1, 0.79, 0.79, 0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glTranslatef(translateX, translateY, translateZ);
 }
 
 /**
@@ -38,7 +57,54 @@ void Draw() {
  * @param[in] y current y coordinate
 */
 void RegularKeys(unsigned char key, int x, int y) {
+    
+    switch (key) {
+        case 27:
+            exit(0);
 
+        case 'i':
+            translateY -= 1.0f;
+            break;
+
+        case 'k':
+            translateY += 1.0f;
+            break;
+
+        case 'w':
+            angleX += 1.5f;
+            break;
+
+        case 's':
+            angleX -= 1.5f;
+            break;
+
+        case 'a':
+            angleY += 1.5f;
+            break;
+
+        case 'd':
+            angleY -= 1.5f;
+            break;
+
+        case 'j':
+            angleZ += 1.5f;
+            break;
+
+        case 'l':
+            angleZ -= 1.5f;
+            break;
+
+        case 'r':
+            angleX = 0.0f;
+            angleY = 0.0f;
+            angleZ = 0.0f;
+
+            translateX = 0.0f;
+            translateY = 0.0f;
+            translateZ = -20.0f;
+    }
+
+    glutPostRedisplay();
 }
 
 /**
@@ -48,7 +114,25 @@ void RegularKeys(unsigned char key, int x, int y) {
  * @param[in] y current y coordinate
 */
 void SpecialKeys(int key, int x, int y) {
+    switch(key) {
+        case GLUT_KEY_UP:
+            translateZ += 1.0f;
+            break;
+        
+        case GLUT_KEY_DOWN:
+            translateZ -= 1.0f;
+            break;
 
+        case GLUT_KEY_LEFT:
+            translateX -= 1.0f;
+            break;
+
+        case GLUT_KEY_RIGHT:
+            translateX += 1.0f;
+            break;
+    }
+
+    glutPostRedisplay();
 }
 
 /**
@@ -59,7 +143,17 @@ void SpecialKeys(int key, int x, int y) {
  * @param[in] y current y coordinate
 */
 void Mouse(int button, int state, int x, int y) {
+    if(state == GLUT_DOWN && button == GLUT_RIGHT_BUTTON) {
+        angleY += 10;
+    } else if(state == GLUT_DOWN && button == GLUT_LEFT_BUTTON) {
+        angleY -= 10;
+    } else if(state == GLUT_DOWN && button == 3) {
+        angleX += 5;
+    } else if(state == GLUT_DOWN && button == 4) {
+        angleX -= 5;
+    }
 
+    glutPostRedisplay();
 }
 
 /**
@@ -70,7 +164,15 @@ void Mouse(int button, int state, int x, int y) {
  * @param[in] y current y coordinate
 */
 void MouseWheel(int wheel, int direction, int x, int y) {
+    wheel = 0;
 
+    if(direction == -1) {
+        zoom -= 0.5;
+    } else if(direction == 1) {
+        zoom += 0.5;
+    }
+
+    glutPostRedisplay();
 }
 
 /**
@@ -79,7 +181,10 @@ void MouseWheel(int wheel, int direction, int x, int y) {
  * @param[in] h height of the viewport
 */
 void HandleResize(int w, int h) {
-
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, (double)w / (double)h, 1.0, 200.0);
 }
 
 /**
