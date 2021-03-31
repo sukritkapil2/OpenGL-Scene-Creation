@@ -15,6 +15,32 @@ void drawQuad(float a1, float a2, float a3, float b1, float b2, float b3, float 
     glEnd();
 }
 
+void drawCuboid(float h, float l, float w, float x, float y) {
+    for(float i = x-w/2;i <= x+w/2; i++) {
+        glPushMatrix();
+        for(float j = y-l/2; j <= y + l/2; j++) {
+            glPushMatrix();
+            glTranslatef(i, j, h/2);
+            glutSolidCube(h);
+            glPopMatrix();
+        }
+        glPopMatrix();
+    }
+}
+
+void drawCuboidVertical(float w, float h, float l, float x, float y) {
+    for(float i = x;i <= x+h; i++) {
+        glPushMatrix();
+        for(float j = y-l/2; j <= y + l/2; j++) {
+            glPushMatrix();
+            glTranslatef(x, j, i-x + w/2);
+            glutSolidCube(w);
+            glPopMatrix();
+        }
+        glPopMatrix();
+    }
+}
+
 Ground::Ground(float w, float l) {
     this->width = w;
     this->length = l;
@@ -25,7 +51,9 @@ void Ground::drawGround() {
     float l = this->length;
     
     glColor3f(0.13, 0.5, 0.1);
+    glPushMatrix();
     drawQuad(w/2, l/2, 0, -w/2, l/2, 0, -w/2, -l/2, 0, w/2, -l/2, 0);
+    glPopMatrix();
 }
 
 void Ground::drawFootPathBorders() {
@@ -126,9 +154,11 @@ void Ground::drawFootPathBase() {
     float l = this->length;
 
     glColor3ub(174,149,94);
+    glPushMatrix();
     drawQuad(5, l/2, 0.1, -5, l/2, 0.1, -5, -l/2, 0.1, 5, -l/2, 0.1);
 
     drawQuad(w/2, 5, 0.1, -w/2, 5, 0.1, -w/2, -5, 0.1, w/2, -5, 0.1);
+    glPopMatrix();
 }
 
 void Ground::drawFootPathBushes() {
@@ -325,6 +355,20 @@ void Ground::drawBushes() {
     glPopMatrix();
 }
 
+void Ground::drawGroundAll() {
+
+    glPushMatrix();
+
+    drawGround();
+    drawFootPathBorders();
+    drawFootPathBase();
+    drawFootPathBushes();
+    drawFootPathFountainBase();
+    drawBushes();
+
+    glPopMatrix();
+}
+
 CBlock::CBlock(float x, float y) {
     this->x = x;
     this->y = y;
@@ -333,11 +377,39 @@ CBlock::CBlock(float x, float y) {
 void CBlock::drawStage() {
     float x = this->x;
     float y = this->y;
+
+    //glTranslatef(x, y, 0.1);
     
+    glColor3ub(85, 87, 86);
+    //drawQuad(x-10, y + 20, 0.2, x-20, y + 20, 0.2, x-20, y - 20, 0.2, x-10, y-20, 0.2);
+
     glPushMatrix();
+    drawCuboid(2, 30, 20, x, y);
+    glTranslatef(0, 0, 2);
+    drawCuboid(1, 28, 18, x, y);
+    glTranslatef(0, 0, 1);
+    drawCuboid(1, 26, 16, x, y);
+    glTranslatef(0, 0, 1);
+    drawCuboid(1, 24, 14, x, y);
+    glPopMatrix();
 
-    glTranslatef(x-20, y, 0.1);
-    drawQuad(x-10, y+20, 0, x-30, y+20, 0, x-30, y-20, 0, x+10, y-20, 0);
+    glPushMatrix();
+    drawCuboidVertical(1, 5, 30, x+7, y);
+    glTranslatef(0,0,5);
+    glColor3ub(27, 31, 84);
+    drawCuboidVertical(1, 6, 30, x+7, y);
+    glPopMatrix();
 
+    glColor3ub(255, 255, 0);
+    drawQuad(x+6.4, y-10, 12, x+6.4, y-8, 12, x+6.4, y-8, 10, x+6.4, y-10, 10);
+    glColor3ub(53, 81, 92);
+    drawQuad(x+6.4, y-8, 12, x+6.4, y-6, 12, x+6.4, y-6, 10, x+6.4, y-8, 10);
+    glColor3ub(255, 0, 0);
+    drawQuad(x+6.4, y-6, 12, x+6.4, y-4, 12, x+6.4, y-4, 10, x+6.4, y-6, 10);
+}
+
+void CBlock::drawCBlock() {
+    glPushMatrix();
+    drawStage();
     glPopMatrix();
 }

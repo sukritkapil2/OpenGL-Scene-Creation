@@ -32,6 +32,12 @@ void myInit() {
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHT2);
+    glEnable(GL_LIGHT3);
+    glEnable(GL_LIGHT4);
+    glEnable(GL_LIGHT5);
+    glEnable(GL_LIGHT6);
+    glEnable(GL_LIGHT7);
     glEnable(GL_NORMALIZE);
     glShadeModel(GL_SMOOTH);
 }
@@ -42,7 +48,7 @@ void myInit() {
 void Draw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glClearColor(0, 0, 0, 1);
+    glClearColor(1,0.79,0.79,0);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -52,18 +58,11 @@ void Draw() {
     glRotatef(angleY, 0.0f, 1.0f, 0.0f);
     glRotatef(angleZ, 0.0f, 0.0f, 1.0f);
  
-    glPushMatrix();
     Ground *ground = new Ground(100, 100);
-    (*ground).drawGround();
-    (*ground).drawFootPathBorders();
-    (*ground).drawFootPathBase();
-    (*ground).drawFootPathBushes();
-    (*ground).drawFootPathFountainBase();
-    (*ground).drawBushes();
-    glPopMatrix();
+    (*ground).drawGroundAll();
 
-    CBlock *cblock = new CBlock(60, 60);
-    (*cblock).drawStage();
+    CBlock *cblock = new CBlock(60, 0);
+    (*cblock).drawCBlock();
 
     glutSwapBuffers();
 }

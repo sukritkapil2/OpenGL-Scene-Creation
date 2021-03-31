@@ -34,6 +34,7 @@ class Ground {
         void drawFootPathBushes();
         void drawFootPathFountainBase();
         void drawBushes();
+        void drawGroundAll();
 };
 
 class CBlock {
@@ -43,4 +44,5 @@ class CBlock {
     public:
         CBlock(float x, float y);
         void drawStage();
+        void drawCBlock();
 };
