@@ -45,4 +45,5 @@ class CBlock {
         CBlock(float x, float y);
         void drawStage();
         void drawCBlock();
+        void drawSideBuildings();
 };

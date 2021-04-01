@@ -41,6 +41,19 @@ void drawCuboidVertical(float w, float h, float l, float x, float y) {
     }
 }
 
+void drawCuboidParallel(float w, float h, float l, float x, float y) {
+    for(float i = x-l/2;i <= x+l/2; i++) {
+        glPushMatrix();
+        for(float j = y; j <= y + h; j++) {
+            glPushMatrix();
+            glTranslatef(i, y, j-y + w/2);
+            glutSolidCube(w);
+            glPopMatrix();
+        }
+        glPopMatrix();
+    }
+}
+
 Ground::Ground(float w, float l) {
     this->width = w;
     this->length = l;
@@ -394,22 +407,75 @@ void CBlock::drawStage() {
     glPopMatrix();
 
     glPushMatrix();
-    drawCuboidVertical(1, 5, 30, x+7, y);
+    drawCuboidVertical(1, 5, 31, x+7, y);
     glTranslatef(0,0,5);
     glColor3ub(27, 31, 84);
-    drawCuboidVertical(1, 6, 30, x+7, y);
+    drawCuboidVertical(1, 6, 31, x+7, y);
     glPopMatrix();
 
+    glPushMatrix();
     glColor3ub(255, 255, 0);
     drawQuad(x+6.4, y-10, 12, x+6.4, y-8, 12, x+6.4, y-8, 10, x+6.4, y-10, 10);
     glColor3ub(53, 81, 92);
     drawQuad(x+6.4, y-8, 12, x+6.4, y-6, 12, x+6.4, y-6, 10, x+6.4, y-8, 10);
     glColor3ub(255, 0, 0);
     drawQuad(x+6.4, y-6, 12, x+6.4, y-4, 12, x+6.4, y-4, 10, x+6.4, y-6, 10);
+    glPopMatrix();
+}
+
+void CBlock::drawSideBuildings() {
+    float x = this->x;
+    float y = this->y;
+
+    glColor3ub(220,210,168);
+    drawCuboid(2, 25, 20, x-0.2, y - 29.5);
+    drawCuboid(2, 25, 20, x-0.2, y + 29.5);
+
+    glPushMatrix();
+    glTranslatef(0, 0, 23);
+    drawCuboid(2, 25, 20, x, y - 29.5);
+    drawCuboid(2, 25, 20, x, y + 29.5);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0, 0, 11);
+    drawCuboid(3, 24, 19, x, y - 29.5);
+    drawCuboid(3, 24, 19, x, y + 29.5);
+    glPopMatrix();
+
+    glPushMatrix();
+    drawCuboidVertical(3, 22, 24, x + 9.5, y - 29.5);
+    drawCuboidVertical(3, 22, 24, x + 9.5, y + 29.5);
+    glPopMatrix();
+
+
+    drawCuboidParallel(2, 22, 19, x-0.5, y - 42);
+    drawCuboidParallel(2, 22, 19, x-0.5, y + 42);
+
+    drawCuboidParallel(2, 22, 5, x + 7, y - 17);
+    drawCuboidParallel(2, 22, 5, x + 7, y + 17);
+
+    glPushMatrix();
+    glColor3ub(127,67,43);
+    glTranslatef(0, 0, 2);
+    drawCuboidVertical(2,2, 22, x-10, y-29.5);
+    drawCuboidVertical(2,2, 22, x-10, y+29.5);
+    glPopMatrix();
+
+    drawCuboidVertical(2,21.5, 1, x-10.1, y-20.5);
+    drawCuboidVertical(2,21.5, 1, x-10.1, y-26.0);
+    drawCuboidVertical(2,21.5, 1, x-10.1, y-31.5);
+    drawCuboidVertical(2,21.5, 1, x-10.1, y-37.0);
+
+    drawCuboidVertical(2,21.5, 1, x-10.1, y+20.5);
+    drawCuboidVertical(2,21.5, 1, x-10.1, y+26.0);
+    drawCuboidVertical(2,21.5, 1, x-10.1, y+31.5);
+    drawCuboidVertical(2,21.5, 1, x-10.1, y+37.0);
 }
 
 void CBlock::drawCBlock() {
     glPushMatrix();
     drawStage();
+    drawSideBuildings();
     glPopMatrix();
 }
