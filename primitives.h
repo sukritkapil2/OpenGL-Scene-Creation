@@ -46,4 +46,5 @@ class CBlock {
         void drawStage();
         void drawCBlock();
         void drawSideBuildings();
+        void drawMainBuilding();
 };

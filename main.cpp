@@ -57,6 +57,7 @@ void Draw() {
     glRotatef(angleX, 1.0f, 0.0f, 0.0f);
     glRotatef(angleY, 0.0f, 1.0f, 0.0f);
     glRotatef(angleZ, 0.0f, 0.0f, 1.0f);
+    glScalef(0.3, 0.3, 0.3);
  
     Ground *ground = new Ground(100, 130);
     (*ground).drawGroundAll();
