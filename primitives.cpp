@@ -473,6 +473,39 @@ void CBlock::drawSideBuildings() {
     drawCuboidVertical(2,21.5, 1, x-10.1, y+37.0);
 }
 
+void drawHemisphere(double r, int lats, int longs) 
+{
+    int i, j;
+    int halfLats = lats / 2; 
+    for(i = 0; i <= halfLats; i++) 
+    {
+        double lat0 = M_PI * (-0.5 + (double) (i - 1) / lats);
+        double z0 = sin(lat0);
+        double zr0 = cos(lat0);
+
+        double lat1 = M_PI * (-0.5 + (double) i / lats);
+        double z1 = sin(lat1);
+        double zr1 = cos(lat1);
+
+        glBegin(GL_QUAD_STRIP);
+        for(j = 0; j <= longs; j++)
+        {
+            double lng = 2 * M_PI * (double) (j - 1) / longs;
+            double x = cos(lng);
+            double y = sin(lng);
+
+            // glTexCoordf()
+            glNormal3f(x * zr0, y * zr0, -z0);
+            glVertex3f(x * zr0, y * zr0, -z0);       
+
+            // glTexCoordf()
+            glNormal3f(x * zr1, y * zr1, -z1);
+            glVertex3f(x * zr1, y * zr1, -z1);
+        }
+        glEnd();
+    }
+}
+
 void CBlock::drawMainBuilding() {
     float x = this->x;
     float y = this->y;
@@ -510,9 +543,27 @@ void CBlock::drawMainBuilding() {
     drawCuboidParallel(4, 30, 1.5, x-28.35, y - 46);
     drawCuboidParallel(4, 30, 1.5, x-28.35, y + 46);
 
-    drawCuboidParallel(2, 30, 20, x-20, y - 65.3);
-    drawCuboidParallel(2, 30, 20, x-20, y + 65.3);
+    drawCuboidParallel(2, 30, 39, x-11, y - 65.3);
+    drawCuboidParallel(2, 30, 39, x-11, y + 65.3);
     
+    //drawCuboidVertical(2, 30, 25, x + 9, y - 78.3);
+    drawCuboidParallel(2, 30, 40, x + 30, y - 90.3);
+    drawCuboidParallel(2, 30, 40, x + 30, y + 90.3);
+
+    glColor3ub(145, 127, 87);
+    drawCuboidVertical(2, 40, 180, x + 50, y);
+
+    glPushMatrix();
+    glColor3ub(220,210,168);
+    glTranslatef(0, 0, 30);
+    drawCuboid(2, 40, 40, x + 30, y - 70.3);
+    drawCuboid(2, 40, 40, x + 30, y + 70.3);
+    glPopMatrix();
+
+    glColor3ub(145, 127, 87);
+    glTranslatef(x+30, y, 42);
+    glScalef(20, 20, 20);
+    drawHemisphere(100, 100, 100);
 }
 
 void CBlock::drawCBlock() {
