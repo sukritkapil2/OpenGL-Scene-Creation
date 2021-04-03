@@ -372,6 +372,7 @@ void Ground::drawGroundAll() {
 
     glPushMatrix();
 
+    glTranslatef(-20, 0, 0);
     drawGround();
     drawFootPathBorders();
     drawFootPathBase();
@@ -551,7 +552,9 @@ void CBlock::drawMainBuilding() {
     drawCuboidParallel(2, 30, 40, x + 30, y + 90.3);
 
     glColor3ub(145, 127, 87);
-    drawCuboidVertical(2, 40, 180, x + 50, y);
+    drawCuboidVertical(2, 40, 80, x + 50, y);
+    drawCuboidVertical(2, 30, 60, x + 50, y-60);
+    drawCuboidVertical(2, 30, 60, x + 50, y+60);
 
     glPushMatrix();
     glColor3ub(220,210,168);
@@ -573,3 +576,47 @@ void CBlock::drawCBlock() {
     drawMainBuilding();
     glPopMatrix();
 }
+
+Library::Library(float x, float y) {
+    this->x = x;
+    this->y = y;
+}
+
+void Library::drawSideBuilding() {
+
+    float x = this->x;
+    float y = this->y;
+
+    glPushMatrix();
+    glColor3ub(220,210,168);
+    drawCuboid(2, 20, 20, x-83.5, y-5.5);
+    glTranslatef(0, 0, 30);
+    drawCuboid(10, 13.2, 13.2, x-83.5, y-5.5);
+    glPopMatrix();
+
+    drawCuboidParallel(4, 30, 1.5, x-74.8, y - 14.5);
+}
+
+void Library::drawMainBuilding() {
+    float x = this->x;
+    float y = this->y;
+    
+    glPushMatrix();
+    glColor3ub(85, 87, 86);
+    glTranslatef(0, 0, -1);
+    drawCuboid(2, 50, 165, x - 10, y + 30);
+    glPopMatrix();
+
+    glPushMatrix();
+    glColor3ub(220,210,168);
+    glTranslatef(0, 0, 15);
+    drawCuboid(6, 50, 165, x - 10, y + 30);
+    glTranslatef(0, 0, 18);
+    drawCuboid(6, 50, 165, x - 10, y + 30);
+    glPopMatrix();
+}
+
+void Library::drawLibrary() {
+    drawMainBuilding();
+    drawSideBuilding();
+} 

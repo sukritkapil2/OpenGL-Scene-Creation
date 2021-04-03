@@ -48,3 +48,14 @@ class CBlock {
         void drawSideBuildings();
         void drawMainBuilding();
 };
+
+class Library {
+    float x;
+    float y;
+
+    public:
+        Library(float x, float y);
+        void drawSideBuilding();
+        void drawLibrary();
+        void drawMainBuilding();
+};

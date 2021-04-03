@@ -59,11 +59,14 @@ void Draw() {
     glRotatef(angleZ, 0.0f, 0.0f, 1.0f);
     glScalef(0.3, 0.3, 0.3);
  
-    Ground *ground = new Ground(100, 130);
+    Ground *ground = new Ground(150, 130);
     (*ground).drawGroundAll();
 
     CBlock *cblock = new CBlock(60, 0);
     (*cblock).drawCBlock();
+
+    Library *library = new Library(0, 60);
+    (*library).drawLibrary();
 
     glutSwapBuffers();
 }
