@@ -688,9 +688,58 @@ void Library::drawMainBuilding() {
     drawCuboidParallel(2, 37, 2, x+18, y - 4);
     drawCuboidParallel(2, 37, 2, x + 28, y - 4);
     glPopMatrix();
+
+    glPushMatrix();
+    glColor3ub(145, 127, 87);
+    drawCuboidVertical(2, 37, 50, x + 73.5, y + 30);
+    drawCuboidVertical(2, 37, 50, x - 93.5, y + 30);
+    glTranslatef(0, -120, 0);
+    drawCuboidVertical(2, 37, 50, x + 73.5, y - 30);
+    drawCuboidVertical(2, 37, 50, x - 93.5, y - 30);
+    glPopMatrix();
 }
 
 void Library::drawLibrary() {
+    glPushMatrix();
     drawMainBuilding();
     drawSideBuilding();
-} 
+    glPopMatrix();
+}
+
+Auditorium::Auditorium(float x, float y) {
+    this->x = x;
+    this->y = y;
+}
+
+void Auditorium::drawAuditorium() {
+    glColor3ub(85, 87, 86);
+    drawCuboid(2, 165,50, x, y);
+
+    glPushMatrix();
+    glColor3ub(220,210,168);
+    glTranslatef(0, 0, 15);
+    drawCuboid(6, 165,45, x, y);
+    glTranslatef(0, 0, 18);
+    drawCuboid(6, 165,45, x, y);
+    glTranslatef(0,0, 20);
+    glColor3ub(127,67,43);
+    drawCuboid(8, 82,45, x, y);
+    glPopMatrix();
+
+    drawCuboidVertical(2, 53, 2, x + 25, y - 43);
+    drawCuboidVertical(2, 53, 2, x + 25, y - 35);
+    drawCuboidVertical(2, 53, 2, x + 25, y - 27);
+    drawCuboidVertical(2, 53, 2, x + 25, y - 19);
+
+    drawCuboidVertical(2, 53, 2, x + 25, y + 43);
+    drawCuboidVertical(2, 53, 2, x + 25, y + 35);
+    drawCuboidVertical(2, 53, 2, x + 25, y + 27);
+    drawCuboidVertical(2, 53, 2, x + 25, y + 19);
+
+    glColor3ub(145, 127, 87);
+    drawCuboidVertical(2, 33, 165, x-25, y);
+    drawCuboidVertical(2, 53, 82, x-25, y);
+
+    drawCuboidParallel(2, 33, 50, x, y + 168/2);
+    drawCuboidParallel(2, 33, 50, x, y - 168/2);
+}

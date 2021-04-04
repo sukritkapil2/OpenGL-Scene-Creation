@@ -59,3 +59,12 @@ class Library {
         void drawLibrary();
         void drawMainBuilding();
 };
+
+class Auditorium {
+    float x;
+    float y;
+
+    public:
+        Auditorium(float x, float y);
+        void drawAuditorium();
+};

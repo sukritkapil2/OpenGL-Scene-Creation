@@ -23,6 +23,51 @@ float translateX = 1.5f;
 float translateY = 0.0f;
 float translateZ = -100.0f;
 
+GLuint bush_main;
+
+void loadObj(char const *fname) {
+	FILE *fp;
+	int read;
+	GLfloat x, y, z;
+	char ch;
+	bush_main=glGenLists(1);
+	fp=fopen(fname,"r");
+	if (!fp) 
+    {
+        printf("can't open file %s\n", fname);
+		exit(1);
+    }
+	glPointSize(2.0);
+	glNewList(bush_main, GL_COMPILE);
+	{
+		glPushMatrix();
+		glBegin(GL_TRIANGLE_STRIP);
+		while(!(feof(fp)))
+ 		{
+  			read=fscanf(fp,"%c %f %f %f",&ch,&x,&y,&z);
+  			if(read==4&&ch=='v')
+  			{
+   				glVertex3f(x,z,y);
+  			}
+ 		}
+		glEnd();
+	}
+	glPopMatrix();
+	glEndList();
+	fclose(fp);
+}
+
+void drawBush()
+{
+    //glTranslatef(x,y,-1);
+    glPushMatrix();
+    glColor3ub(34,139,34);
+    glScalef(3,3,3);
+    glCallList(bush_main);
+    glPopMatrix();
+    //glTranslatef(-x,-y,1);
+}
+
 /**
  * Sets properties of the GLUT library to make it ready for 3D rendering
 */
@@ -67,6 +112,53 @@ void Draw() {
 
     Library *library = new Library(0, 60);
     (*library).drawLibrary();
+
+    Auditorium *auditorium = new Auditorium(-120, 0);
+    (*auditorium).drawAuditorium();
+
+    glPushMatrix();
+    glTranslatef(12,  42.5, 2);
+    drawBush();
+    glTranslatef(12.112,  0, 0);
+    drawBush();
+    glTranslatef(12.114,  0, 0);
+    drawBush();
+    glTranslatef(12.116,  0, 0);
+    drawBush();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-12,  42.5, 2);
+    drawBush();
+    glTranslatef(-12.112,  0, 0);
+    drawBush();
+    glTranslatef(-12.114,  0, 0);
+    drawBush();
+    glTranslatef(-12.116,  0, 0);
+    drawBush();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(12,  -77.5, 2);
+    drawBush();
+    glTranslatef(12.112,  0, 0);
+    drawBush();
+    glTranslatef(12.114,  0, 0);
+    drawBush();
+    glTranslatef(12.116,  0, 0);
+    drawBush();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-12,  -77.5, 2);
+    drawBush();
+    glTranslatef(-12.112,  0, 0);
+    drawBush();
+    glTranslatef(-12.114,  0, 0);
+    drawBush();
+    glTranslatef(-12.116,  0, 0);
+    drawBush();
+    glPopMatrix();
 
     glutSwapBuffers();
 }
@@ -230,6 +322,10 @@ int main(int argc, char **argv) {
     glutMouseFunc(Mouse);
     glutMouseWheelFunc(MouseWheel);
     glutReshapeFunc(HandleResize);
+
+    char const* fname = "bush.obj";
+
+    loadObj(fname);
 
     glutMainLoop();
 
