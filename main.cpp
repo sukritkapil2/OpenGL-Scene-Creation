@@ -3,6 +3,14 @@
  * This is the driver file for the scene creation. It initializes glut and calls its methods
 */
 
+/*
+Group Members
+
+Sukrit - 2018A7PS0205H
+Jay Karhade - 2018A3PS0852H
+Siddharth Jagota - 2018A7PS0166H
+*/
+
 //Necessary imports
 #include <bits/stdc++.h>
 #include <GL/glut.h>
